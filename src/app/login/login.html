@@ -1,0 +1,75 @@
+<div class="login-container">
+  <!-- Left section: Image -->
+  <div class="left-section">
+    <img src="./Chattrix_image.png" alt="App image" class="side-image" />
+  </div>
+
+  <!-- Right section: Logo + Login form -->
+  <div class="right-section">
+    <img src="./logo.png" alt="Company Logo" class="logo" />
+    <h1 class="brand-name">ChatTrix</h1>
+
+    <h2>Login</h2>
+
+   <form #loginForm="ngForm">
+  <input 
+    type="email" 
+    placeholder="Email" 
+    name="email" 
+    ngModel 
+    required />
+
+  <input 
+    type="password" 
+    placeholder="Password" 
+    name="password" 
+    ngModel 
+    required />
+
+  <!-- Button color changes using [ngStyle] -->
+  <button 
+    type="submit" 
+    class="login-btn"
+    [ngStyle]="{ 
+      'background-color': loginForm.valid ? 'orange' : 'gray', 
+      'cursor': loginForm.valid ? 'pointer' : 'not-allowed' 
+    }">
+    Login
+  </button>
+</form>
+
+<!-- Tips section outside the form -->
+<div class="tips-section">
+  <h3>Login Tips</h3>
+  <ul>
+    <li *ngFor="let tip of loginTips">{{ tip }}</li>
+  </ul>
+</div>
+
+    <!-- OR divider -->
+    <div class="divider">
+      <span>OR</span>
+    </div>
+
+    <!-- Social icons -->
+    <div class="social-icons">
+      <div class="icon">
+        <img src="./facebook.png" alt="Facebook" />
+        <span>Facebook</span>
+      </div>
+      <div class="icon">
+        <img src="./google.png" alt="Google" />
+        <span>Google</span>
+      </div>
+      <div class="icon">
+        <img src="./apple.png" alt="Apple" />
+        <span>Apple</span>
+      </div>
+    </div>
+
+    <!-- Signup link -->
+    <p class="signup-text">
+      New user? <a href="#">Sign up</a>
+    </p>
+  </div>
+</div>
