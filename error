@@ -1,20 +1,10 @@
-Bilkul 👍 — yahaan complete working example ka code diya gaya hai, jise tum Angular project me directly use kar sakte ho.  
-Assume ki tumne ye files create kar li hain:
+Bahut badhiya 🙌 — agar tumhe **console me print karna hai “service name works”** jab service chale, to tumharī services me constructor ya method ke andar `console.log()` likh sakte ho.  
 
-```
-src/
- └── app/
-      ├── services/
-      │    ├── user.service.ts
-      │    └── product.service.ts
-      └── dashboard/
-           ├── dashboard.component.ts
-           ├── dashboard.component.html
-```
+Chalo updated code dekhte hain 👇  
 
 ---
 
-### 🧩 1️⃣ `user.service.ts`
+### 🧩 `user.service.ts`
 ```typescript
 import { Injectable } from '@angular/core';
 
@@ -22,7 +12,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserService {
+  constructor() {
+    console.log('✅ UserService works');
+  }
+
   getUserName(): string {
+    console.log('UserService: getUserName() called');
     return 'Outlier User';
   }
 }
@@ -30,7 +25,7 @@ export class UserService {
 
 ---
 
-### 🧩 2️⃣ `product.service.ts`
+### 🧩 `product.service.ts`
 ```typescript
 import { Injectable } from '@angular/core';
 
@@ -38,7 +33,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ProductService {
+  constructor() {
+    console.log('✅ ProductService works');
+  }
+
   getProductList(): string[] {
+    console.log('ProductService: getProductList() called');
     return ['Laptop', 'Monitor', 'Keyboard', 'Mouse'];
   }
 }
@@ -46,7 +46,7 @@ export class ProductService {
 
 ---
 
-### 🧩 3️⃣ `dashboard.component.ts`
+### 🧩 `dashboard.component.ts`
 ```typescript
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
@@ -64,9 +64,12 @@ export class DashboardComponent implements OnInit {
   constructor(
     private userService: UserService,
     private productService: ProductService
-  ) {}
+  ) {
+    console.log('✅ DashboardComponent works');
+  }
 
   ngOnInit(): void {
+    console.log('DashboardComponent ngOnInit() called');
     this.userName = this.userService.getUserName();
     this.products = this.productService.getProductList();
   }
@@ -75,26 +78,23 @@ export class DashboardComponent implements OnInit {
 
 ---
 
-### 🧩 4️⃣ `dashboard.component.html`
-```html
-<h2>Welcome, {{ userName }}</h2>
-
-<h3>Product List:</h3>
-<ul>
-  <li *ngFor="let item of products">{{ item }}</li>
-</ul>
-```
-
----
-
-### ✅ Final Step
-Ab `app.component.html` me likho:
-```html
-<app-dashboard></app-dashboard>
-```
-
-Angular automatically `DashboardComponent` render karega aur dono services ko dependency injection ke through use karega 🎯
+### 🧠 Output dekhne ke liye:
+1. Project run karo:  
+   ```bash
+   ng serve
+   ```
+2. Browser me app open karo (default: `http://localhost:4200`)
+3. Browser ke **Developer Console** (`Ctrl + Shift + I`) me jaake messages dekh sakte ho:  
+   ```
+   ✅ UserService works
+   ✅ ProductService works
+   ✅ DashboardComponent works
+   DashboardComponent ngOnInit() called
+   UserService: getUserName() called
+   ProductService: getProductList() called
+   ```
 
 ---
 
-Agar tumhara setup ready nahi hai (Angular CLI ya module setup), to mai bata du kaise `AppModule` me import/register karte hain — batana chaaho to wo step bhi likh du?
+Chaaho to mai ek variant bana du jisme services me ek function `logServiceStatus()` bana ho aur wo explicitly call hota ho component se — helpful hota debugging ke liye. Batana hai?
+
