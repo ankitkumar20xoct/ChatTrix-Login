@@ -1,61 +1,542 @@
-[{
-	"resource": "/c:/exl/angApp1/firstApp/src/app/login/login.ts",
-	"owner": "typescript",
-	"code": "2307",
-	"severity": 8,
-	"message": "Cannot find module './directives/highlight' or its corresponding type declarations.",
-	"source": "ts",
-	"startLineNumber": 5,
-	"startColumn": 36,
-	"endLineNumber": 5,
-	"endColumn": 60,
-	"origin": "extHost1"
-},{
-	"resource": "/c:/exl/angApp1/firstApp/src/app/login/login.ts",
-	"owner": "typescript",
-	"code": "2307",
-	"severity": 8,
-	"message": "Cannot find module './directives/blink' or its corresponding type declarations.",
-	"source": "ts",
-	"startLineNumber": 6,
-	"startColumn": 32,
-	"endLineNumber": 6,
-	"endColumn": 52,
-	"origin": "extHost1"
-},{
-	"resource": "/c:/exl/angApp1/firstApp/src/app/login/login.ts",
-	"owner": "typescript",
-	"code": "2307",
-	"severity": 8,
-	"message": "Cannot find module './directives/rotate' or its corresponding type declarations.",
-	"source": "ts",
-	"startLineNumber": 7,
-	"startColumn": 33,
-	"endLineNumber": 7,
-	"endColumn": 54,
-	"origin": "extHost1"
-},{
-	"resource": "/c:/exl/angApp1/firstApp/src/app/login/login.ts",
-	"owner": "typescript",
-	"code": "2307",
-	"severity": 8,
-	"message": "Cannot find module './directives/shadow' or its corresponding type declarations.",
-	"source": "ts",
-	"startLineNumber": 8,
-	"startColumn": 33,
-	"endLineNumber": 8,
-	"endColumn": 54,
-	"origin": "extHost1"
-},{
-	"resource": "/c:/exl/angApp1/firstApp/src/app/login/login.ts",
-	"owner": "typescript",
-	"code": "2307",
-	"severity": 8,
-	"message": "Cannot find module './directives/scale' or its corresponding type declarations.",
-	"source": "ts",
-	"startLineNumber": 9,
-	"startColumn": 32,
-	"endLineNumber": 9,
-	"endColumn": 52,
-	"origin": "extHost1"
-}]
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\exl\angApp1\firstApp> ng g s login
+Node.js version v25.0.0 detected.
+Odd numbered Node.js versions will not enter LTS status and should not be used for production. For more information, please see https://nodejs.org/en/abo
+ut/previous-releases/.
+CREATE src/app/login.spec.ts (332 bytes)
+CREATE src/app/login.ts (118 bytes)
+PS C:\exl\angApp1\firstApp> ng g s services/login.service
+Node.js version v25.0.0 detected.
+Odd numbered Node.js versions will not enter LTS status and should not be used for production. For more information, please see https://nodejs.org/en/abo
+ut/previous-releases/.
+CREATE src/app/services/login.service.spec.ts (368 bytes)
+CREATE src/app/services/login.service.ts (125 bytes)
+PS C:\exl\angApp1\firstApp> ng serve
+Node.js version v25.0.0 detected.
+Odd numbered Node.js versions will not enter LTS status and should not be used for production. For more information, please see https://nodejs.org/en/abo
+ut/previous-releases/.
+ Port 4200 is already in use.
+Would you like to use a different port? Yes
+Initial chunk files | Names         |  Raw size
+main.js             | main          |  23.82 kB |
+styles.css          | styles        | 124 bytes |
+polyfills.js        | polyfills     |  95 bytes |
+
+                    | Initial total |  24.04 kB
+
+Application bundle generation complete. [3.059 seconds] - 2025-11-16T16:07:24.324Z
+
+Watch mode enabled. Watching for file changes...
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+  ➜  Local:   http://localhost:50582/
+  ➜  press h + enter to show help
+Initial chunk files | Names | Raw size
+main.js             | main  | 22.13 kB |
+
+Application bundle generation complete. [0.640 seconds] - 2025-11-17T07:23:57.271Z
+
+Component update sent to client(s).
+Initial chunk files | Names         |  Raw size
+main.js             | main          |  22.13 kB |
+styles.css          | styles        | 124 bytes |
+polyfills.js        | polyfills     |  95 bytes |
+
+                    | Initial total |  22.35 kB
+
+Application bundle generation complete. [0.425 seconds] - 2025-11-17T07:24:18.757Z
+
+Component update sent to client(s).
+Application bundle generation failed. [0.201 seconds] - 2025-11-17T07:24:38.789Z
+
+X [ERROR] TS2307: Cannot find module './directives/highlight' or its corresponding type declarations. [plugin angular-compiler]
+
+    src/app/login/login.ts:5:35:
+      5 │ import { HighlightDirective } from './directives/highlight';
+        ╵                                    ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2307: Cannot find module './directives/blink' or its corresponding type declarations. [plugin angular-compiler]
+
+    src/app/login/login.ts:6:31:
+      6 │ import { BlinkDirective } from './directives/blink';
+        ╵                                ~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2307: Cannot find module './directives/rotate' or its corresponding type declarations. [plugin angular-compiler]
+
+    src/app/login/login.ts:7:32:
+      7 │ import { RotateDirective } from './directives/rotate';
+        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2307: Cannot find module './directives/shadow' or its corresponding type declarations. [plugin angular-compiler]
+
+    src/app/login/login.ts:8:32:
+      8 │ import { ShadowDirective } from './directives/shadow';
+        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2307: Cannot find module './directives/scale' or its corresponding type declarations. [plugin angular-compiler]
+
+    src/app/login/login.ts:9:31:
+      9 │ import { ScaleDirective } from './directives/scale';
+        ╵                                ~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:16:4:
+      16 │     HighlightDirective,
+         ╵     ~~~~~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:16:4:
+      16 │     HighlightDirective,
+         ╵     ~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:17:4:
+      17 │     BlinkDirective,
+         ╵     ~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:17:4:
+      17 │     BlinkDirective,
+         ╵     ~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:18:4:
+      18 │     RotateDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:18:4:
+      18 │     RotateDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:19:4:
+      19 │     ShadowDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:19:4:
+      19 │     ShadowDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:20:4:
+      20 │     ScaleDirective
+         ╵     ~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:20:4:
+      20 │     ScaleDirective
+         ╵     ~~~~~~~~~~~~~~
+
+
+X [ERROR] Could not resolve "./directives/highlight"
+
+    src/app/login/login.ts:5:35:
+      5 │ import { HighlightDirective } from './directives/highlight';
+        ╵                                    ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] Could not resolve "./directives/blink"
+
+    src/app/login/login.ts:6:31:
+      6 │ import { BlinkDirective } from './directives/blink';
+        ╵                                ~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] Could not resolve "./directives/rotate"
+
+    src/app/login/login.ts:7:32:
+      7 │ import { RotateDirective } from './directives/rotate';
+        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] Could not resolve "./directives/shadow"
+
+    src/app/login/login.ts:8:32:
+      8 │ import { ShadowDirective } from './directives/shadow';
+        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] Could not resolve "./directives/scale"
+
+    src/app/login/login.ts:9:31:
+      9 │ import { ScaleDirective } from './directives/scale';
+        ╵                                ~~~~~~~~~~~~~~~~~~~~
+
+
+PS C:\exl\angApp1\firstApp> ng g d Directives
+Node.js version v25.0.0 detected.
+Odd numbered Node.js versions will not enter LTS status and should not be used for production. For more information, please see https://nodejs.org/en/abo
+ut/previous-releases/.
+CREATE src/app/directives.spec.ts (211 bytes)
+CREATE src/app/directives.ts (150 bytes)
+PS C:\exl\angApp1\firstApp> ^C
+PS C:\exl\angApp1\firstApp> ng serve
+Node.js version v25.0.0 detected.
+Odd numbered Node.js versions will not enter LTS status and should not be used for production. For more information, please see https://nodejs.org/en/abo
+ut/previous-releases/.
+ Port 4200 is already in use.
+Would you like to use a different port? Yes
+Application bundle generation failed. [2.497 seconds] - 2025-11-17T08:21:12.466Z
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/highlight.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:5:35:
+      5 │ import { HighlightDirective } from './directives/highlight';
+        ╵                                    ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/blink.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:6:31:
+      6 │ import { BlinkDirective } from './directives/blink';
+        ╵                                ~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/rotate.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:7:32:
+      7 │ import { RotateDirective } from './directives/rotate';
+        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/shadow.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:8:32:
+      8 │ import { ShadowDirective } from './directives/shadow';
+        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/scale.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:9:31:
+      9 │ import { ScaleDirective } from './directives/scale';
+        ╵                                ~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:16:4:
+      16 │     HighlightDirective,
+         ╵     ~~~~~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:16:4:
+      16 │     HighlightDirective,
+         ╵     ~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:17:4:
+      17 │     BlinkDirective,
+         ╵     ~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:17:4:
+      17 │     BlinkDirective,
+         ╵     ~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:18:4:
+      18 │     RotateDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:18:4:
+      18 │     RotateDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:19:4:
+      19 │     ShadowDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:19:4:
+      19 │     ShadowDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:20:4:
+      20 │     ScaleDirective
+         ╵     ~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:20:4:
+      20 │     ScaleDirective
+         ╵     ~~~~~~~~~~~~~~
+
+
+Watch mode enabled. Watching for file changes...
+PS C:\exl\angApp1\firstApp> clear
+PS C:\exl\angApp1\firstApp> ng serve
+Node.js version v25.0.0 detected.
+Odd numbered Node.js versions will not enter LTS status and should not be used for production. For more information, please see https://nodejs.org/en/abo
+ut/previous-releases/.
+ Port 4200 is already in use.
+Would you like to use a different port? Yes
+Application bundle generation failed. [2.523 seconds] - 2025-11-17T08:21:59.188Z
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/highlight.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:5:35:
+      5 │ import { HighlightDirective } from './directives/highlight';
+        ╵                                    ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/blink.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:6:31:
+      6 │ import { BlinkDirective } from './directives/blink';
+        ╵                                ~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/rotate.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:7:32:
+      7 │ import { RotateDirective } from './directives/rotate';
+        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/shadow.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:8:32:
+      8 │ import { ShadowDirective } from './directives/shadow';
+        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/scale.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:9:31:
+      9 │ import { ScaleDirective } from './directives/scale';
+        ╵                                ~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:16:4:
+      16 │     HighlightDirective,
+         ╵     ~~~~~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:16:4:
+      16 │     HighlightDirective,
+         ╵     ~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:17:4:
+      17 │     BlinkDirective,
+         ╵     ~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:17:4:
+      17 │     BlinkDirective,
+         ╵     ~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:18:4:
+      18 │     RotateDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:18:4:
+      18 │     RotateDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:19:4:
+      19 │     ShadowDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:19:4:
+      19 │     ShadowDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:20:4:
+      20 │     ScaleDirective
+         ╵     ~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:20:4:
+      20 │     ScaleDirective
+         ╵     ~~~~~~~~~~~~~~
+
+
+Watch mode enabled. Watching for file changes...
+PS C:\exl\angApp1\firstApp> ng serve --open
+Node.js version v25.0.0 detected.
+Odd numbered Node.js versions will not enter LTS status and should not be used for production. For more information, please see https://nodejs.org/en/abo
+ut/previous-releases/.
+ Port 4200 is already in use.
+Would you like to use a different port? Yes
+Application bundle generation failed. [2.563 seconds] - 2025-11-17T08:22:57.582Z
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/highlight.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:5:35:
+      5 │ import { HighlightDirective } from './directives/highlight';
+        ╵                                    ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/blink.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:6:31:
+      6 │ import { BlinkDirective } from './directives/blink';
+        ╵                                ~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/rotate.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:7:32:
+      7 │ import { RotateDirective } from './directives/rotate';
+        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/shadow.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:8:32:
+      8 │ import { ShadowDirective } from './directives/shadow';
+        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/scale.ts' is not a module. [plugin angular-compiler]
+
+    src/app/login/login.ts:9:31:
+      9 │ import { ScaleDirective } from './directives/scale';
+        ╵                                ~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:16:4:
+      16 │     HighlightDirective,
+         ╵     ~~~~~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:16:4:
+      16 │     HighlightDirective,
+         ╵     ~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:17:4:
+      17 │     BlinkDirective,
+         ╵     ~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:17:4:
+      17 │     BlinkDirective,
+         ╵     ~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:18:4:
+      18 │     RotateDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:18:4:
+      18 │     RotateDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:19:4:
+      19 │     ShadowDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:19:4:
+      19 │     ShadowDirective,
+         ╵     ~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically. [plugin angular-compiler]
+
+    src/app/login/login.ts:20:4:
+      20 │     ScaleDirective
+         ╵     ~~~~~~~~~~~~~~
+
+  Unknown reference.
+
+    src/app/login/login.ts:20:4:
+      20 │     ScaleDirective
+         ╵     ~~~~~~~~~~~~~~
+
+
+Watch mode enabled. Watching for file changes...
