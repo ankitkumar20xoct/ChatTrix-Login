@@ -1,92 +1,290 @@
-Windows PowerShell
-Copyright (C) Microsoft Corporation. All rights reserved.
+Perfect 👏 — that screenshot helps a lot!  
 
-PS C:\exl\angApp1\firstApp> ng serve
-Node.js version v25.0.0 detected.
-Odd numbered Node.js versions will not enter LTS status and should not be used for production. For more information, please see https://nodejs.org/en/about/prev
-ious-releases/.
-Application bundle generation failed. [2.610 seconds] - 2025-11-17T08:43:10.210Z
+You’ve got almost everything correct, but your issue is caused by **three small structural naming and export problems**:
 
-X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/blink.directive.ts' is not a module. [plugin angular-compiler]
+---
 
-    src/app/login/login.ts:5:31:
-      5 │ import { BlinkDirective } from './directives/blink.directive';
-        ╵                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 🚨 The Problems in Your Setup
 
+1. The folder is named **`Directives`** (capital “D”),  
+   but your imports in `login.ts` use lowercase (`./directives/...`) –  
+   Angular and TypeScript are **case‑sensitive**, so that mismatch breaks the imports.  
+   ✅ **Fix → rename the folder to lowercase:**  
+   ```
+   src/app/login/directives
+   ```
+   (Right-click, Rename → `directives`)
 
-X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/rotate.ts' is not a module. [plugin angular-compiler]
+2. The directive files (`blink.ts`, `highlight.ts`, etc.) don’t follow Angular naming conventions (`*.directive.ts`) and possibly don’t have `@Directive` decorators with a class export.  
+   ✅ Fix that next (see proper files below).
 
-    src/app/login/login.ts:6:32:
-      6 │ import { RotateDirective } from './directives/rotate';
-        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+3. `login.ts` should represent a component, not just a TypeScript file floating around.  
+   ✅ Rename it to `login.component.ts` and make sure it has a proper `@Component` decorator.
 
+---
 
-X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/shadow.ts' is not a module. [plugin angular-compiler]
+### ✅ Corrected Folder Structure
 
-    src/app/login/login.ts:7:32:
-      7 │ import { ShadowDirective } from './directives/shadow';
-        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+```
+src/
+ └── app/
+     ├── login/
+     │   ├── directives/
+     │   │   ├── blink.directive.ts
+     │   │   ├── highlight.directive.ts
+     │   │   ├── rotate.directive.ts
+     │   │   ├── scale.directive.ts
+     │   │   └── shadow.directive.ts
+     │   ├── login.component.html
+     │   ├── login.component.css
+     │   └── login.component.ts
+     └── app.module.ts
+```
 
+---
 
-X [ERROR] TS2306: File 'C:/exl/angApp1/firstApp/src/app/login/directives/scale.ts' is not a module. [plugin angular-compiler]
+### 🔹 1. `src/app/login/directives/blink.directive.ts`
 
-    src/app/login/login.ts:8:31:
-      8 │ import { ScaleDirective } from './directives/scale';
-        ╵                                ~~~~~~~~~~~~~~~~~~~~
+```ts
+import { Directive, ElementRef, OnInit } from '@angular/core';
 
+@Directive({
+  selector: '[appBlink]'
+})
+export class BlinkDirective implements OnInit {
+  constructor(private el: ElementRef) {}
 
-X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
-  Value could not be determined statically. [plugin angular-compiler]
+  ngOnInit() {
+    setInterval(() => {
+      const visibility = this.el.nativeElement.style.visibility;
+      this.el.nativeElement.style.visibility = visibility === 'hidden' ? 'visible' : 'hidden';
+    }, 400);
+  }
+}
+```
 
-    src/app/login/login.ts:16:4:
-      16 │     BlinkDirective,
-         ╵     ~~~~~~~~~~~~~~
+---
 
-  Unknown reference.
+### 🔹 2. `src/app/login/directives/highlight.directive.ts`
 
-    src/app/login/login.ts:16:4:
-      16 │     BlinkDirective,
-         ╵     ~~~~~~~~~~~~~~
+```ts
+import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 
+@Directive({
+  selector: '[appHighlight]'
+})
+export class HighlightDirective {
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
 
-X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
-  Value could not be determined statically. [plugin angular-compiler]
+  @HostListener('mouseenter')
+  onEnter() {
+    this.renderer.setStyle(this.el.nativeElement, 'backgroundColor', 'yellow');
+  }
 
-    src/app/login/login.ts:17:4:
-      17 │     RotateDirective,
-         ╵     ~~~~~~~~~~~~~~~
+  @HostListener('mouseleave')
+  onLeave() {
+    this.renderer.removeStyle(this.el.nativeElement, 'backgroundColor');
+  }
+}
+```
 
-  Unknown reference.
+---
 
-    src/app/login/login.ts:17:4:
-      17 │     RotateDirective,
-         ╵     ~~~~~~~~~~~~~~~
+### 🔹 3. `src/app/login/directives/rotate.directive.ts`
 
+```ts
+import { Directive, ElementRef, Renderer2, OnInit } from '@angular/core';
 
-X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
-  Value could not be determined statically. [plugin angular-compiler]
+@Directive({
+  selector: '[appRotate]'
+})
+export class RotateDirective implements OnInit {
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
 
-    src/app/login/login.ts:18:4:
-      18 │     ShadowDirective,
-         ╵     ~~~~~~~~~~~~~~~
+  ngOnInit() {
+    let angle = 0;
+    setInterval(() => {
+      angle += 10;
+      this.renderer.setStyle(this.el.nativeElement, 'transform', `rotate(${angle}deg)`);
+    }, 200);
+  }
+}
+```
 
-  Unknown reference.
+---
 
-    src/app/login/login.ts:18:4:
-      18 │     ShadowDirective,
-         ╵     ~~~~~~~~~~~~~~~
+### 🔹 4. `src/app/login/directives/scale.directive.ts`
 
+```ts
+import { Directive, ElementRef, Renderer2, HostListener } from '@angular/core';
 
-X [ERROR] NG1010: 'imports' must be an array of components, directives, pipes, or NgModules.
-  Value could not be determined statically. [plugin angular-compiler]
+@Directive({
+  selector: '[appScale]'
+})
+export class ScaleDirective {
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
 
-    src/app/login/login.ts:19:4:
-      19 │     ScaleDirective
-         ╵     ~~~~~~~~~~~~~~
+  @HostListener('mouseenter')
+  onEnter() {
+    this.renderer.setStyle(this.el.nativeElement, 'transform', 'scale(1.1)');
+  }
 
-  Unknown reference.
+  @HostListener('mouseleave')
+  onLeave() {
+    this.renderer.setStyle(this.el.nativeElement, 'transform', 'scale(1)');
+  }
+}
+```
 
-    src/app/login/login.ts:19:4:
-      19 │     ScaleDirective
-         ╵     ~~~~~~~~~~~~~~
+---
 
+### 🔹 5. `src/app/login/directives/shadow.directive.ts`
+
+```ts
+import { Directive, ElementRef, Renderer2, OnInit } from '@angular/core';
+
+@Directive({
+  selector: '[appShadow]'
+})
+export class ShadowDirective implements OnInit {
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
+
+  ngOnInit() {
+    this.renderer.setStyle(
+      this.el.nativeElement,
+      'boxShadow',
+      '2px 2px 10px rgba(0,0,0,0.3)'
+    );
+  }
+}
+```
+
+---
+
+### 🔹 6. `src/app/login/login.component.ts`
+
+If you are using **standalone components**, use this:
+
+```ts
+import { Component } from '@angular/core';
+import { HighlightDirective } from './directives/highlight.directive';
+import { BlinkDirective } from './directives/blink.directive';
+import { RotateDirective } from './directives/rotate.directive';
+import { ShadowDirective } from './directives/shadow.directive';
+import { ScaleDirective } from './directives/scale.directive';
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
+  imports: [
+    HighlightDirective,
+    BlinkDirective,
+    RotateDirective,
+    ShadowDirective,
+    ScaleDirective
+  ]
+})
+export class LoginComponent {}
+```
+
+If your project uses the older **NgModule-based** setup, use this simpler component:
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent {}
+```
+
+…and declare this component + all directives in your `AppModule`.
+
+---
+
+### 🔹 7. `src/app/login/login.component.html`
+
+Just something to test all directives:
+
+```html
+<h3 appHighlight>Hover to highlight</h3>
+<p appBlink>I am blinking text</p>
+<div appRotate class="box">Rotating</div>
+<div appShadow appScale class="box">Shadow + Scale</div>
+```
+
+---
+
+### 🔹 8. `src/app/login/login.component.css`
+
+```css
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  line-height: 100px;
+  text-align: center;
+  margin: 10px;
+}
+```
+
+---
+
+### 🔹 9. (If Using AppModule)
+
+`src/app/app.module.ts`
+
+```ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { HighlightDirective } from './login/directives/highlight.directive';
+import { BlinkDirective } from './login/directives/blink.directive';
+import { RotateDirective } from './login/directives/rotate.directive';
+import { ShadowDirective } from './login/directives/shadow.directive';
+import { ScaleDirective } from './login/directives/scale.directive';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    HighlightDirective,
+    BlinkDirective,
+    RotateDirective,
+    ShadowDirective,
+    ScaleDirective
+  ],
+  imports: [BrowserModule],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+---
+
+### 🔹 10. Clean Build
+
+Now run these commands in PowerShell:
+
+```bash
+Ctrl + C           # stop running app first
+rmdir /s /q node_modules
+rmdir /s /q .angular
+npm install
+ng serve --open
+```
+
+---
+
+### ✅ After applying all these:
+- Folder name **`directives`** must be lowercase.  
+- Directive filenames end with **`.directive.ts`**.  
+- Each directive **has one class** with `@Directive`.  
+- `login.component.ts` is properly capitalized and declared.
+
+If you apply these changes, all **TS2306** and **NG1010** errors will disappear, and your app will bundle successfully.
