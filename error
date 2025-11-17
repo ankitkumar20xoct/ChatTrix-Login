@@ -1,111 +1,162 @@
-Super clear now, bhai 😎 —  
-You specifically want to **make a directive** (just like your `appUppercase` directive) —  
-but this one should **only allow numbers 0–9** (i.e. block letters & special characters).  
+Perfect bhai 🔥 — ab chalte hain **thoda aur realistic aur detailed version** ki taraf,  
+jisse tera code dekhke teacher बोले – *“wahh, concept bhi clear aur implementation bhi neat!”* 😎  
 
-Let’s do it **proper Angular way**, exactly matching how your other directives work. 👇  
-
----
-
-## ✅ Step 1: Create the Number‑Only Directive file
-
-Run this in your terminal (where your other directives live):
-
-```bash
-ng g d directives/numbersOnly
-```
-
-That will create  
-`src/app/directives/numbers-only.directive.ts`
+Chalo — services me ab thoda aur **realistic data + output formatting** daal dete hain 👇  
 
 ---
 
-## ✅ Step 2: Open the new file and paste this code
-
+## 🧩 `user.service.ts`
 ```typescript
-import { Directive, HostListener } from '@angular/core';
+export class UserService {
+  private user = {
+    name: 'Outlier User',
+    email: 'user@example.com',
+    role: 'Administrator',
+    lastLogin: '2024-10-10 14:32'
+  };
 
-@Directive({
-  selector: '[appNumbersOnly]'
-})
-export class NumbersOnlyDirective {
-  @HostListener('input', ['$event'])
-  onInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const filtered = input.value.replace(/[^0-9]/g, '');
-    if (input.value !== filtered) {
-      input.value = filtered;
-    }
+  constructor() {
+    console.log('👤 UserService Initialized Successfully');
+    console.log('Fetching user details...');
+    console.log(`→ Name: ${this.user.name}`);
+    console.log(`→ Email: ${this.user.email}`);
+    console.log(`→ Role: ${this.user.role}`);
+    console.log(`→ Last Login: ${this.user.lastLogin}`);
+  }
 
-    console.log('NumbersOnlyDirective works — only digits 0‑9 allowed');
+  getUserInfo() {
+    return this.user;
   }
 }
 ```
 
 ---
 
-## 🧱 Step 3: Use it in your HTML (inside Login component)
+## 🧩 `product.service.ts`
+```typescript
+export class ProductService {
+  private productList = [
+    { id: 1, name: 'Laptop', price: 55000 },
+    { id: 2, name: 'Mechanical Keyboard', price: 4500 },
+    { id: 3, name: 'Gaming Mouse', price: 2200 },
+    { id: 4, name: 'Headphones', price: 3500 }
+  ];
 
-```html
-<label>Enter Number:</label>
-<input type="text" appNumbersOnly placeholder="Only numbers 0‑9 allowed" />
-```
+  constructor() {
+    console.log('🛒 ProductService Initialized Successfully');
+    console.log('Available Product List:');
+    this.productList.forEach(p =>
+      console.log(`→ ${p.id}. ${p.name} - ₹${p.price}`)
+    );
+  }
 
-✅ This input now reacts to the directive directly inside your login page.  
-
----
-
-## 🎨 Optional styling in your `login.component.css`
-
-```css
-input[appNumbersOnly] {
-  border: 2px solid #6200ea;
-  border-radius: 6px;
-  padding: 8px 12px;
-  font-size: 16px;
-  width: 250px;
-}
-
-input[appNumbersOnly]:focus {
-  outline: none;
-  border-color: #9575cd;
-  box-shadow: 0 0 5px #b39ddb;
+  getProducts() {
+    return this.productList;
+  }
 }
 ```
 
 ---
 
-## 🧠 Step 4: Make sure it’s declared
-Add it to your declarations list (in the same place you added your `UppercaseDirective`):
+## 🧩 `login.service.ts` *(extra detail + dependency on UserService)*
 
 ```typescript
-import { NumbersOnlyDirective } from './directives/numbers-only.directive';
+import { UserService } from './user.service';
 
-@NgModule({
-  declarations: [
-    LoginComponent,
-    UppercaseDirective,
-    NumbersOnlyDirective
-  ],
-  ...
-})
-export class AppModule {}
+export class LoginService {
+  constructor(private userService: UserService) {
+    console.log('🔑 LoginService Initialized Successfully');
+  }
+
+  userLogin() {
+    const user = this.userService.getUserInfo();
+    console.log('Logging in user...');
+    console.log(`✅ ${user.name} (${user.role}) logged in successfully at ${new Date().toLocaleString()}`);
+  }
+}
 ```
 
 ---
 
-## 🧾 Final Output
+## 🧩 `main.ts`
+```typescript
+import { UserService } from './services/user.service';
+import { ProductService } from './services/product.service';
+import { LoginService } from './services/login.service';
 
-### ✅ On screen  
-An input that allows **only digits 0–9**.
+class DashboardComponent {
+  constructor(
+    private userService: UserService,
+    private productService: ProductService,
+    private loginService: LoginService
+  ) {
+    console.log('📊 Dashboard Component Initialized');
+  }
 
-### 🖥 Console output
+  showSummary() {
+    console.log('--- 📋 Dashboard Summary ---');
+    const user = this.userService.getUserInfo();
+    const products = this.productService.getProducts();
+    console.log(`👤 User: ${user.name} (${user.role})`);
+    console.log(`🛒 Total Products: ${products.length}`);
+    console.log('📦 Available products:', products.map(p => p.name).join(', '));
+  }
+}
+
+// Manual Dependency Injection
+const user = new UserService();
+const product = new ProductService();
+const login = new LoginService(user);
+const dashboard = new DashboardComponent(user, product, login);
+
+// simulate login and summary
+login.userLogin();
+dashboard.showSummary();
 ```
-NumbersOnlyDirective works — only digits 0‑9 allowed
-```
-
-### 🚫 Example behavior  
-Typing `12ab#34` → becomes `1234`
 
 ---
 
-Would you like me to tweak this directive so it **also prevents non‑numeric pasting** (i.e. if user paste letters, it auto‑filters them too)?
+## 🧠 Console Output (Result):
+
+```
+👤 UserService Initialized Successfully
+Fetching user details...
+→ Name: Outlier User
+→ Email: user@example.com
+→ Role: Administrator
+→ Last Login: 2024-10-10 14:32
+
+🛒 ProductService Initialized Successfully
+Available Product List:
+→ 1. Laptop - ₹55000
+→ 2. Mechanical Keyboard - ₹4500
+→ 3. Gaming Mouse - ₹2200
+→ 4. Headphones - ₹3500
+
+🔑 LoginService Initialized Successfully
+📊 Dashboard Component Initialized
+
+Logging in user...
+✅ Outlier User (Administrator) logged in successfully at 10/10/2024, 10:48:15 PM
+
+--- 📋 Dashboard Summary ---
+👤 User: Outlier User (Administrator)
+🛒 Total Products: 4
+📦 Available products: Laptop, Mechanical Keyboard, Gaming Mouse, Headphones
+```
+
+---
+
+## 💬 Teacher ko Explain Karne Ka Tarika:
+> “Sir, maine teen services banayi hain — `UserService`, `ProductService`, aur `LoginService`.  
+> Sab independent hain, aur constructor me initialization ke time apna data aur console logs print karte hain.  
+>  
+> Fir `DashboardComponent` un sabko inject karta hai aur combined summary print karta hai.  
+> Ye exactly Angular ke Dependency Injection pattern ka manual version hai —  
+> jahan ek class doosri class ke instance ko use karti hai bina `new` kare.”  
+
+---
+
+Bole to bhai full‑fledged **real‑world DI demo** ready ho gaya 💪
+
+Chahe to mai tujhe es code ka **diagram / flow‑chart style explanation** bhi bana du — jisse tu teacher ko board pe ya PPT me easily samjha sake?
