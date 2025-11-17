@@ -1,13 +1,16 @@
-[{
-	"resource": "/c:/exl/angApp1/firstApp/src/app/services/user.spec.ts",
-	"owner": "typescript",
-	"code": "2305",
-	"severity": 8,
-	"message": "Module '\"./user\"' has no exported member 'User'.",
-	"source": "ts",
-	"startLineNumber": 3,
-	"startColumn": 10,
-	"endLineNumber": 3,
-	"endColumn": 14,
-	"origin": "extHost1"
-}]
+import { UserService } from './services/user.service';
+import { ProductService } from './services/product.service';
+
+class DemoComponent {
+  constructor(
+    private userService: UserService,
+    private productService: ProductService
+  ) {
+    console.log('✅ DemoComponent works');
+  }
+}
+
+// Manual dependency injection
+const userSrv = new UserService();
+const productSrv = new ProductService();
+const demo = new DemoComponent(userSrv, productSrv);
