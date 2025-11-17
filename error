@@ -1,8 +1,111 @@
-window.addEventListener('DOMContentLoaded', () => {
-  const element = document.getElementById('uppercaseBox');
-  if (element) {
-    const text = element.innerText;
-    element.innerText = text.toUpperCase();
-    console.log('Uppercase directive works — text converted to UPPERCASE');
+Super clear now, bhai 😎 —  
+You specifically want to **make a directive** (just like your `appUppercase` directive) —  
+but this one should **only allow numbers 0–9** (i.e. block letters & special characters).  
+
+Let’s do it **proper Angular way**, exactly matching how your other directives work. 👇  
+
+---
+
+## ✅ Step 1: Create the Number‑Only Directive file
+
+Run this in your terminal (where your other directives live):
+
+```bash
+ng g d directives/numbersOnly
+```
+
+That will create  
+`src/app/directives/numbers-only.directive.ts`
+
+---
+
+## ✅ Step 2: Open the new file and paste this code
+
+```typescript
+import { Directive, HostListener } from '@angular/core';
+
+@Directive({
+  selector: '[appNumbersOnly]'
+})
+export class NumbersOnlyDirective {
+  @HostListener('input', ['$event'])
+  onInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const filtered = input.value.replace(/[^0-9]/g, '');
+    if (input.value !== filtered) {
+      input.value = filtered;
+    }
+
+    console.log('NumbersOnlyDirective works — only digits 0‑9 allowed');
   }
-});
+}
+```
+
+---
+
+## 🧱 Step 3: Use it in your HTML (inside Login component)
+
+```html
+<label>Enter Number:</label>
+<input type="text" appNumbersOnly placeholder="Only numbers 0‑9 allowed" />
+```
+
+✅ This input now reacts to the directive directly inside your login page.  
+
+---
+
+## 🎨 Optional styling in your `login.component.css`
+
+```css
+input[appNumbersOnly] {
+  border: 2px solid #6200ea;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 16px;
+  width: 250px;
+}
+
+input[appNumbersOnly]:focus {
+  outline: none;
+  border-color: #9575cd;
+  box-shadow: 0 0 5px #b39ddb;
+}
+```
+
+---
+
+## 🧠 Step 4: Make sure it’s declared
+Add it to your declarations list (in the same place you added your `UppercaseDirective`):
+
+```typescript
+import { NumbersOnlyDirective } from './directives/numbers-only.directive';
+
+@NgModule({
+  declarations: [
+    LoginComponent,
+    UppercaseDirective,
+    NumbersOnlyDirective
+  ],
+  ...
+})
+export class AppModule {}
+```
+
+---
+
+## 🧾 Final Output
+
+### ✅ On screen  
+An input that allows **only digits 0–9**.
+
+### 🖥 Console output
+```
+NumbersOnlyDirective works — only digits 0‑9 allowed
+```
+
+### 🚫 Example behavior  
+Typing `12ab#34` → becomes `1234`
+
+---
+
+Would you like me to tweak this directive so it **also prevents non‑numeric pasting** (i.e. if user paste letters, it auto‑filters them too)?
