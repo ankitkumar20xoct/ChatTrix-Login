@@ -1,53 +1,100 @@
-Perfect 👍 You want the **`shadow.spec.ts`** test file example — here it is fully fixed and strongly typed (so it won’t throw constructor argument or type conversion errors).
+Bilkul 👍 — yahaan complete working example ka code diya gaya hai, jise tum Angular project me directly use kar sakte ho.  
+Assume ki tumne ye files create kar li hain:
 
----
-
-### ✅ `src/app/login/directives/shadow.spec.ts`
-
-```ts
-import { ElementRef, Renderer2 } from '@angular/core';
-import { ShadowDirective } from './shadow.directive';
-
-describe('ShadowDirective', () => {
-  it('should create an instance', () => {
-    // Create a mock ElementRef on a new <div>
-    const el = new ElementRef(document.createElement('div'));
-
-    // Mock Renderer2 with "as unknown as" casting to avoid type mismatch
-    const renderer = {} as unknown as Renderer2;
-
-    // Create instance of the directive
-    const directive = new ShadowDirective(el, renderer);
-
-    // Expect it to exist
-    expect(directive).toBeTruthy();
-  });
-});
+```
+src/
+ └── app/
+      ├── services/
+      │    ├── user.service.ts
+      │    └── product.service.ts
+      └── dashboard/
+           ├── dashboard.component.ts
+           ├── dashboard.component.html
 ```
 
 ---
 
-### 💡 Explanation
-- `ElementRef` and `Renderer2` are normally injected by Angular at runtime.
-- In the test environment, we have to **mock** them manually.
-- The `as unknown as Renderer2` casting is a safe TypeScript workaround telling the compiler:
-  > “It’s fine, pretend this is Renderer2 for the test.”
+### 🧩 1️⃣ `user.service.ts`
+```typescript
+import { Injectable } from '@angular/core';
 
----
-
-With this file in place, all constructor argument errors and type warnings in **`shadow.spec.ts`** will go away.  
-✅ You can now run the app normally with:
-
-```bash
-ng serve --open
-```
-
-or run tests with:
-
-```bash
-ng test
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+  getUserName(): string {
+    return 'Outlier User';
+  }
+}
 ```
 
 ---
 
-If you’d like, I can also give you the same clean, correct versions for `scale.spec.ts` and `rotate.spec.ts` to make all of them consistent. Would you like that?
+### 🧩 2️⃣ `product.service.ts`
+```typescript
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductService {
+  getProductList(): string[] {
+    return ['Laptop', 'Monitor', 'Keyboard', 'Mouse'];
+  }
+}
+```
+
+---
+
+### 🧩 3️⃣ `dashboard.component.ts`
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../services/user.service';
+import { ProductService } from '../services/product.service';
+
+@Component({
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
+})
+export class DashboardComponent implements OnInit {
+  userName!: string;
+  products: string[] = [];
+
+  constructor(
+    private userService: UserService,
+    private productService: ProductService
+  ) {}
+
+  ngOnInit(): void {
+    this.userName = this.userService.getUserName();
+    this.products = this.productService.getProductList();
+  }
+}
+```
+
+---
+
+### 🧩 4️⃣ `dashboard.component.html`
+```html
+<h2>Welcome, {{ userName }}</h2>
+
+<h3>Product List:</h3>
+<ul>
+  <li *ngFor="let item of products">{{ item }}</li>
+</ul>
+```
+
+---
+
+### ✅ Final Step
+Ab `app.component.html` me likho:
+```html
+<app-dashboard></app-dashboard>
+```
+
+Angular automatically `DashboardComponent` render karega aur dono services ko dependency injection ke through use karega 🎯
+
+---
+
+Agar tumhara setup ready nahi hai (Angular CLI ya module setup), to mai bata du kaise `AppModule` me import/register karte hain — batana chaaho to wo step bhi likh du?
