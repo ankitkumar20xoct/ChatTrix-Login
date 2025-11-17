@@ -1,48 +1,17 @@
-[{
-	"resource": "/c:/exl/angApp1/firstApp/src/app/login/Directives/highlight.ts",
-	"owner": "typescript",
-	"code": "2724",
-	"severity": 8,
-	"message": "'\"@angular/core\"' has no exported member named 'directive'. Did you mean 'Directive'?",
-	"source": "ts",
-	"startLineNumber": 2,
-	"startColumn": 10,
-	"endLineNumber": 2,
-	"endColumn": 19,
-	"origin": "extHost1"
-},{
-	"resource": "/c:/exl/angApp1/firstApp/src/app/login/Directives/highlight.ts",
-	"owner": "typescript",
-	"code": "2300",
-	"severity": 8,
-	"message": "Duplicate identifier 'HighlightDirective'.",
-	"source": "ts",
-	"startLineNumber": 8,
-	"startColumn": 14,
-	"endLineNumber": 8,
-	"endColumn": 32,
-	"origin": "extHost1"
-},{
-	"resource": "/c:/exl/angApp1/firstApp/src/app/login/Directives/highlight.ts",
-	"owner": "_generated_diagnostic_collection_name_#0",
-	"code": "-998900",
-	"severity": 8,
-	"message": "This component requires inline template type-checking, which is not supported by the current environment.",
-	"startLineNumber": 19,
-	"startColumn": 14,
-	"endLineNumber": 19,
-	"endColumn": 32,
-	"origin": "extHost1"
-},{
-	"resource": "/c:/exl/angApp1/firstApp/src/app/login/Directives/highlight.ts",
-	"owner": "typescript",
-	"code": "2300",
-	"severity": 8,
-	"message": "Duplicate identifier 'HighlightDirective'.",
-	"source": "ts",
-	"startLineNumber": 19,
-	"startColumn": 14,
-	"endLineNumber": 19,
-	"endColumn": 32,
-	"origin": "extHost1"
-}]
+import { Directive, ElementRef, Renderer2, HostListener } from '@angular/core';
+
+@Directive({
+  selector: '[appHighlight]',
+  standalone: true
+})
+export class HighlightDirective {
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
+
+  @HostListener('mouseenter') onEnter() {
+    this.renderer.setStyle(this.el.nativeElement, 'background-color', 'yellow');
+  }
+
+  @HostListener('mouseleave') onLeave() {
+    this.renderer.removeStyle(this.el.nativeElement, 'background-color');
+  }
+}
