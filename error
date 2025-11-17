@@ -1,16 +1,15 @@
-import { UserService } from './services/user.service';
-import { ProductService } from './services/product.service';
+import { Directive, ElementRef, OnInit } from '@angular/core';
 
-class DemoComponent {
-  constructor(
-    private userService: UserService,
-    private productService: ProductService
-  ) {
-    console.log('✅ DemoComponent works');
+@Directive({
+  selector: '[appBlink]'
+})
+export class BlinkDirective implements OnInit {
+  constructor(private el: ElementRef) {}
+
+  ngOnInit() {
+    setInterval(() => {
+      const visibility = this.el.nativeElement.style.visibility;
+      this.el.nativeElement.style.visibility = visibility === 'hidden' ? 'visible' : 'hidden';
+    }, 400);
   }
 }
-
-// Manual dependency injection
-const userSrv = new UserService();
-const productSrv = new ProductService();
-const demo = new DemoComponent(userSrv, productSrv);
