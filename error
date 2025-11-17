@@ -1,172 +1,83 @@
-Perfect 👍 — you want **each directive in its own separate file**, but all of them should do the **same thing**:  
-simply **print**  
-> `this directive works`  
-in the console (no visual or DOM changes).  
+Perfect 💪 — you want to create an **Angular directive** that automatically converts all the text inside an element to **uppercase** (changes lowercase → uppercase).  
 
-Here’s how to do it cleanly 👇
+Let’s create this cleanly, step by step 👇
 
 ---
 
-## 🧭 Step 1: Create a folder
-In your terminal, run:
+## ✅ Step 1: Create a directive file
+
+In your terminal, inside your Angular project folder, run:
 
 ```bash
-mkdir src/app/directives
+ng g d directives/uppercase
 ```
+
+This will create:
+```
+src/app/directives/uppercase.directive.ts
+```
+and automatically update your `app.module.ts`.
 
 ---
 
-## 🧱 Step 2: Create the directive files
+## ✅ Step 2: Update the directive code
 
-You need five files — one for each directive:
+Open the new file `uppercase.directive.ts` and replace everything with this:
 
-```
-src/app/directives/
- ├── highlight.directive.ts
- ├── blink.directive.ts
- ├── rotate.directive.ts
- ├── shadow.directive.ts
- └── scale.directive.ts
-```
-
-You can make them manually or use Angular CLI (recommended):
-
-```bash
-ng g d directives/highlight
-ng g d directives/blink
-ng g d directives/rotate
-ng g d directives/shadow
-ng g d directives/scale
-```
-
-That will automatically:
-- Create each file  
-- Add its declaration to `app.module.ts`
-
----
-
-## 🧩 Step 3: Paste the code inside each file
-
-### 🟡 **highlight.directive.ts**
 ```typescript
-import { Directive, OnInit } from '@angular/core';
+import { Directive, ElementRef, AfterViewInit } from '@angular/core';
 
 @Directive({
-  selector: '[appHighlight]'
+  selector: '[appUppercase]'
 })
-export class HighlightDirective implements OnInit {
-  ngOnInit() {
-    console.log('this directive works');
-  }
-}
-```
+export class UppercaseDirective implements AfterViewInit {
+  constructor(private el: ElementRef) {}
 
-### 🔵 **blink.directive.ts**
-```typescript
-import { Directive, OnInit } from '@angular/core';
+  ngAfterViewInit() {
+    const text = this.el.nativeElement.innerText;
+    this.el.nativeElement.innerText = text.toUpperCase();
 
-@Directive({
-  selector: '[appBlink]'
-})
-export class BlinkDirective implements OnInit {
-  ngOnInit() {
-    console.log('this directive works');
-  }
-}
-```
-
-### 🟢 **rotate.directive.ts**
-```typescript
-import { Directive, OnInit } from '@angular/core';
-
-@Directive({
-  selector: '[appRotate]'
-})
-export class RotateDirective implements OnInit {
-  ngOnInit() {
-    console.log('this directive works');
-  }
-}
-```
-
-### 🟣 **shadow.directive.ts**
-```typescript
-import { Directive, OnInit } from '@angular/core';
-
-@Directive({
-  selector: '[appShadow]'
-})
-export class ShadowDirective implements OnInit {
-  ngOnInit() {
-    console.log('this directive works');
-  }
-}
-```
-
-### 🟠 **scale.directive.ts**
-```typescript
-import { Directive, OnInit } from '@angular/core';
-
-@Directive({
-  selector: '[appScale]'
-})
-export class ScaleDirective implements OnInit {
-  ngOnInit() {
-    console.log('this directive works');
+    console.log('UppercaseDirective works — text converted to UPPERCASE');
   }
 }
 ```
 
 ---
 
-## 🧾 Step 4: Check your `app.module.ts`
+## 🧠 How it works
 
-Angular CLI usually adds these automatically.  
-If not, make sure they’re declared manually like this:
-
-```typescript
-import { HighlightDirective } from './directives/highlight.directive';
-import { BlinkDirective } from './directives/blink.directive';
-import { RotateDirective } from './directives/rotate.directive';
-import { ShadowDirective } from './directives/shadow.directive';
-import { ScaleDirective } from './directives/scale.directive';
-
-@NgModule({
-  declarations: [
-    // other components...
-    HighlightDirective,
-    BlinkDirective,
-    RotateDirective,
-    ShadowDirective,
-    ScaleDirective
-  ],
-  // ...
-})
-export class AppModule {}
-```
+- `ElementRef` gives access to the element the directive is attached to.
+- `ngAfterViewInit()` runs after Angular renders the element.
+- It reads the current `innerText`,
+  converts it with `.toUpperCase()`,
+  and puts it back.
+- Logs `"UppercaseDirective works — text converted to UPPERCASE"` in the console ✅
 
 ---
 
-## 🧠 Example usage:
-In your component HTML (`login.component.html` or any other):
+## ✅ Step 3: Use it in your HTML
 
+Example:
 ```html
-<h3 appHighlight>Highlight example</h3>
-<h3 appBlink>Blink example</h3>
-<h3 appRotate>Rotate example</h3>
-<h3 appShadow>Shadow example</h3>
-<h3 appScale>Scale example</h3>
+<p appUppercase>This text will become uppercase automatically.</p>
+
+<h2 appUppercase>login successful</h2>
 ```
 
-🖥 **Console output:**
+💥 Output in the browser:
 ```
-this directive works
-this directive works
-this directive works
-this directive works
-this directive works
+THIS TEXT WILL BECOME UPPERCASE AUTOMATICALLY.
+LOGIN SUCCESSFUL
+```
+
+🖥 Console:
+```
+UppercaseDirective works — text converted to UPPERCASE
 ```
 
 ---
 
-Would you like me to modify them so that **each prints its own name** (for example, “HighlightDirective works” / “BlinkDirective works”)?
+## ⚙️ Optional Enhancement (live update)
+If you want it to also change to uppercase when you type (for example, inside an `<input>`), I can show you the version that works with both static text **and input fields**.
+
+Would you like that version too?
