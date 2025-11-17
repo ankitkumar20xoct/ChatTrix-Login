@@ -1,290 +1,89 @@
-Perfect 👏 — that screenshot helps a lot!  
-
-You’ve got almost everything correct, but your issue is caused by **three small structural naming and export problems**:
-
----
-
-### 🚨 The Problems in Your Setup
-
-1. The folder is named **`Directives`** (capital “D”),  
-   but your imports in `login.ts` use lowercase (`./directives/...`) –  
-   Angular and TypeScript are **case‑sensitive**, so that mismatch breaks the imports.  
-   ✅ **Fix → rename the folder to lowercase:**  
-   ```
-   src/app/login/directives
-   ```
-   (Right-click, Rename → `directives`)
-
-2. The directive files (`blink.ts`, `highlight.ts`, etc.) don’t follow Angular naming conventions (`*.directive.ts`) and possibly don’t have `@Directive` decorators with a class export.  
-   ✅ Fix that next (see proper files below).
-
-3. `login.ts` should represent a component, not just a TypeScript file floating around.  
-   ✅ Rename it to `login.component.ts` and make sure it has a proper `@Component` decorator.
-
----
-
-### ✅ Corrected Folder Structure
-
-```
-src/
- └── app/
-     ├── login/
-     │   ├── directives/
-     │   │   ├── blink.directive.ts
-     │   │   ├── highlight.directive.ts
-     │   │   ├── rotate.directive.ts
-     │   │   ├── scale.directive.ts
-     │   │   └── shadow.directive.ts
-     │   ├── login.component.html
-     │   ├── login.component.css
-     │   └── login.component.ts
-     └── app.module.ts
-```
-
----
-
-### 🔹 1. `src/app/login/directives/blink.directive.ts`
-
-```ts
-import { Directive, ElementRef, OnInit } from '@angular/core';
-
-@Directive({
-  selector: '[appBlink]'
-})
-export class BlinkDirective implements OnInit {
-  constructor(private el: ElementRef) {}
-
-  ngOnInit() {
-    setInterval(() => {
-      const visibility = this.el.nativeElement.style.visibility;
-      this.el.nativeElement.style.visibility = visibility === 'hidden' ? 'visible' : 'hidden';
-    }, 400);
-  }
-}
-```
-
----
-
-### 🔹 2. `src/app/login/directives/highlight.directive.ts`
-
-```ts
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
-
-@Directive({
-  selector: '[appHighlight]'
-})
-export class HighlightDirective {
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
-
-  @HostListener('mouseenter')
-  onEnter() {
-    this.renderer.setStyle(this.el.nativeElement, 'backgroundColor', 'yellow');
-  }
-
-  @HostListener('mouseleave')
-  onLeave() {
-    this.renderer.removeStyle(this.el.nativeElement, 'backgroundColor');
-  }
-}
-```
-
----
-
-### 🔹 3. `src/app/login/directives/rotate.directive.ts`
-
-```ts
-import { Directive, ElementRef, Renderer2, OnInit } from '@angular/core';
-
-@Directive({
-  selector: '[appRotate]'
-})
-export class RotateDirective implements OnInit {
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
-
-  ngOnInit() {
-    let angle = 0;
-    setInterval(() => {
-      angle += 10;
-      this.renderer.setStyle(this.el.nativeElement, 'transform', `rotate(${angle}deg)`);
-    }, 200);
-  }
-}
-```
-
----
-
-### 🔹 4. `src/app/login/directives/scale.directive.ts`
-
-```ts
-import { Directive, ElementRef, Renderer2, HostListener } from '@angular/core';
-
-@Directive({
-  selector: '[appScale]'
-})
-export class ScaleDirective {
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
-
-  @HostListener('mouseenter')
-  onEnter() {
-    this.renderer.setStyle(this.el.nativeElement, 'transform', 'scale(1.1)');
-  }
-
-  @HostListener('mouseleave')
-  onLeave() {
-    this.renderer.setStyle(this.el.nativeElement, 'transform', 'scale(1)');
-  }
-}
-```
-
----
-
-### 🔹 5. `src/app/login/directives/shadow.directive.ts`
-
-```ts
-import { Directive, ElementRef, Renderer2, OnInit } from '@angular/core';
-
-@Directive({
-  selector: '[appShadow]'
-})
-export class ShadowDirective implements OnInit {
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
-
-  ngOnInit() {
-    this.renderer.setStyle(
-      this.el.nativeElement,
-      'boxShadow',
-      '2px 2px 10px rgba(0,0,0,0.3)'
-    );
-  }
-}
-```
-
----
-
-### 🔹 6. `src/app/login/login.component.ts`
-
-If you are using **standalone components**, use this:
-
-```ts
-import { Component } from '@angular/core';
-import { HighlightDirective } from './directives/highlight.directive';
-import { BlinkDirective } from './directives/blink.directive';
-import { RotateDirective } from './directives/rotate.directive';
-import { ShadowDirective } from './directives/shadow.directive';
-import { ScaleDirective } from './directives/scale.directive';
-
-@Component({
-  selector: 'app-login',
-  standalone: true,
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  imports: [
-    HighlightDirective,
-    BlinkDirective,
-    RotateDirective,
-    ShadowDirective,
-    ScaleDirective
-  ]
-})
-export class LoginComponent {}
-```
-
-If your project uses the older **NgModule-based** setup, use this simpler component:
-
-```ts
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
-})
-export class LoginComponent {}
-```
-
-…and declare this component + all directives in your `AppModule`.
-
----
-
-### 🔹 7. `src/app/login/login.component.html`
-
-Just something to test all directives:
-
-```html
-<h3 appHighlight>Hover to highlight</h3>
-<p appBlink>I am blinking text</p>
-<div appRotate class="box">Rotating</div>
-<div appShadow appScale class="box">Shadow + Scale</div>
-```
-
----
-
-### 🔹 8. `src/app/login/login.component.css`
-
-```css
-.box {
-  width: 100px;
-  height: 100px;
-  background-color: lightblue;
-  line-height: 100px;
-  text-align: center;
-  margin: 10px;
-}
-```
-
----
-
-### 🔹 9. (If Using AppModule)
-
-`src/app/app.module.ts`
-
-```ts
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { HighlightDirective } from './login/directives/highlight.directive';
-import { BlinkDirective } from './login/directives/blink.directive';
-import { RotateDirective } from './login/directives/rotate.directive';
-import { ShadowDirective } from './login/directives/shadow.directive';
-import { ScaleDirective } from './login/directives/scale.directive';
-
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    HighlightDirective,
-    BlinkDirective,
-    RotateDirective,
-    ShadowDirective,
-    ScaleDirective
-  ],
-  imports: [BrowserModule],
-  bootstrap: [AppComponent]
-})
-export class AppModule {}
-```
-
----
-
-### 🔹 10. Clean Build
-
-Now run these commands in PowerShell:
-
-```bash
-Ctrl + C           # stop running app first
-rmdir /s /q node_modules
-rmdir /s /q .angular
-npm install
-ng serve --open
-```
-
----
-
-### ✅ After applying all these:
-- Folder name **`directives`** must be lowercase.  
-- Directive filenames end with **`.directive.ts`**.  
-- Each directive **has one class** with `@Directive`.  
-- `login.component.ts` is properly capitalized and declared.
-
-If you apply these changes, all **TS2306** and **NG1010** errors will disappear, and your app will bundle successfully.
+[{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/login/Directives/blink.spec.ts",
+	"owner": "typescript",
+	"code": "2554",
+	"severity": 8,
+	"message": "Expected 1 arguments, but got 0.",
+	"source": "ts",
+	"startLineNumber": 5,
+	"startColumn": 23,
+	"endLineNumber": 5,
+	"endColumn": 43,
+	"relatedInformation": [
+		{
+			"startLineNumber": 7,
+			"startColumn": 15,
+			"endLineNumber": 7,
+			"endColumn": 37,
+			"message": "An argument for 'el' was not provided.",
+			"resource": "/c:/exl/angApp1/firstApp/src/app/login/directives/blink.directive.ts"
+		}
+	],
+	"origin": "extHost1"
+},{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/login/Directives/rotate.spec.ts",
+	"owner": "typescript",
+	"code": "2554",
+	"severity": 8,
+	"message": "Expected 2 arguments, but got 0.",
+	"source": "ts",
+	"startLineNumber": 6,
+	"startColumn": 23,
+	"endLineNumber": 6,
+	"endColumn": 44,
+	"relatedInformation": [
+		{
+			"startLineNumber": 7,
+			"startColumn": 15,
+			"endLineNumber": 7,
+			"endColumn": 37,
+			"message": "An argument for 'el' was not provided.",
+			"resource": "/c:/exl/angApp1/firstApp/src/app/login/directives/rotate.directive.ts"
+		}
+	],
+	"origin": "extHost1"
+},{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/login/Directives/scale.spec.ts",
+	"owner": "typescript",
+	"code": "2554",
+	"severity": 8,
+	"message": "Expected 2 arguments, but got 0.",
+	"source": "ts",
+	"startLineNumber": 6,
+	"startColumn": 23,
+	"endLineNumber": 6,
+	"endColumn": 43,
+	"relatedInformation": [
+		{
+			"startLineNumber": 7,
+			"startColumn": 15,
+			"endLineNumber": 7,
+			"endColumn": 37,
+			"message": "An argument for 'el' was not provided.",
+			"resource": "/c:/exl/angApp1/firstApp/src/app/login/directives/scale.directive.ts"
+		}
+	],
+	"origin": "extHost1"
+},{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/login/Directives/shadow.spec.ts",
+	"owner": "typescript",
+	"code": "2554",
+	"severity": 8,
+	"message": "Expected 2 arguments, but got 0.",
+	"source": "ts",
+	"startLineNumber": 6,
+	"startColumn": 23,
+	"endLineNumber": 6,
+	"endColumn": 44,
+	"relatedInformation": [
+		{
+			"startLineNumber": 7,
+			"startColumn": 15,
+			"endLineNumber": 7,
+			"endColumn": 37,
+			"message": "An argument for 'el' was not provided.",
+			"resource": "/c:/exl/angApp1/firstApp/src/app/login/directives/shadow.directive.ts"
+		}
+	],
+	"origin": "extHost1"
+}]
