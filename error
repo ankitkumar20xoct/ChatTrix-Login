@@ -1,0 +1,61 @@
+[{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/login/login.ts",
+	"owner": "typescript",
+	"code": "2307",
+	"severity": 8,
+	"message": "Cannot find module './directives/highlight' or its corresponding type declarations.",
+	"source": "ts",
+	"startLineNumber": 5,
+	"startColumn": 36,
+	"endLineNumber": 5,
+	"endColumn": 60,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/login/login.ts",
+	"owner": "typescript",
+	"code": "2307",
+	"severity": 8,
+	"message": "Cannot find module './directives/blink' or its corresponding type declarations.",
+	"source": "ts",
+	"startLineNumber": 6,
+	"startColumn": 32,
+	"endLineNumber": 6,
+	"endColumn": 52,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/login/login.ts",
+	"owner": "typescript",
+	"code": "2307",
+	"severity": 8,
+	"message": "Cannot find module './directives/rotate' or its corresponding type declarations.",
+	"source": "ts",
+	"startLineNumber": 7,
+	"startColumn": 33,
+	"endLineNumber": 7,
+	"endColumn": 54,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/login/login.ts",
+	"owner": "typescript",
+	"code": "2307",
+	"severity": 8,
+	"message": "Cannot find module './directives/shadow' or its corresponding type declarations.",
+	"source": "ts",
+	"startLineNumber": 8,
+	"startColumn": 33,
+	"endLineNumber": 8,
+	"endColumn": 54,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/login/login.ts",
+	"owner": "typescript",
+	"code": "2307",
+	"severity": 8,
+	"message": "Cannot find module './directives/scale' or its corresponding type declarations.",
+	"source": "ts",
+	"startLineNumber": 9,
+	"startColumn": 32,
+	"endLineNumber": 9,
+	"endColumn": 52,
+	"origin": "extHost1"
+}]
