@@ -1,15 +1,172 @@
-import { Directive, ElementRef, OnInit } from '@angular/core';
+Perfect 👍 — you want **each directive in its own separate file**, but all of them should do the **same thing**:  
+simply **print**  
+> `this directive works`  
+in the console (no visual or DOM changes).  
+
+Here’s how to do it cleanly 👇
+
+---
+
+## 🧭 Step 1: Create a folder
+In your terminal, run:
+
+```bash
+mkdir src/app/directives
+```
+
+---
+
+## 🧱 Step 2: Create the directive files
+
+You need five files — one for each directive:
+
+```
+src/app/directives/
+ ├── highlight.directive.ts
+ ├── blink.directive.ts
+ ├── rotate.directive.ts
+ ├── shadow.directive.ts
+ └── scale.directive.ts
+```
+
+You can make them manually or use Angular CLI (recommended):
+
+```bash
+ng g d directives/highlight
+ng g d directives/blink
+ng g d directives/rotate
+ng g d directives/shadow
+ng g d directives/scale
+```
+
+That will automatically:
+- Create each file  
+- Add its declaration to `app.module.ts`
+
+---
+
+## 🧩 Step 3: Paste the code inside each file
+
+### 🟡 **highlight.directive.ts**
+```typescript
+import { Directive, OnInit } from '@angular/core';
+
+@Directive({
+  selector: '[appHighlight]'
+})
+export class HighlightDirective implements OnInit {
+  ngOnInit() {
+    console.log('this directive works');
+  }
+}
+```
+
+### 🔵 **blink.directive.ts**
+```typescript
+import { Directive, OnInit } from '@angular/core';
 
 @Directive({
   selector: '[appBlink]'
 })
 export class BlinkDirective implements OnInit {
-  constructor(private el: ElementRef) {}
-
   ngOnInit() {
-    setInterval(() => {
-      const visibility = this.el.nativeElement.style.visibility;
-      this.el.nativeElement.style.visibility = visibility === 'hidden' ? 'visible' : 'hidden';
-    }, 400);
+    console.log('this directive works');
   }
 }
+```
+
+### 🟢 **rotate.directive.ts**
+```typescript
+import { Directive, OnInit } from '@angular/core';
+
+@Directive({
+  selector: '[appRotate]'
+})
+export class RotateDirective implements OnInit {
+  ngOnInit() {
+    console.log('this directive works');
+  }
+}
+```
+
+### 🟣 **shadow.directive.ts**
+```typescript
+import { Directive, OnInit } from '@angular/core';
+
+@Directive({
+  selector: '[appShadow]'
+})
+export class ShadowDirective implements OnInit {
+  ngOnInit() {
+    console.log('this directive works');
+  }
+}
+```
+
+### 🟠 **scale.directive.ts**
+```typescript
+import { Directive, OnInit } from '@angular/core';
+
+@Directive({
+  selector: '[appScale]'
+})
+export class ScaleDirective implements OnInit {
+  ngOnInit() {
+    console.log('this directive works');
+  }
+}
+```
+
+---
+
+## 🧾 Step 4: Check your `app.module.ts`
+
+Angular CLI usually adds these automatically.  
+If not, make sure they’re declared manually like this:
+
+```typescript
+import { HighlightDirective } from './directives/highlight.directive';
+import { BlinkDirective } from './directives/blink.directive';
+import { RotateDirective } from './directives/rotate.directive';
+import { ShadowDirective } from './directives/shadow.directive';
+import { ScaleDirective } from './directives/scale.directive';
+
+@NgModule({
+  declarations: [
+    // other components...
+    HighlightDirective,
+    BlinkDirective,
+    RotateDirective,
+    ShadowDirective,
+    ScaleDirective
+  ],
+  // ...
+})
+export class AppModule {}
+```
+
+---
+
+## 🧠 Example usage:
+In your component HTML (`login.component.html` or any other):
+
+```html
+<h3 appHighlight>Highlight example</h3>
+<h3 appBlink>Blink example</h3>
+<h3 appRotate>Rotate example</h3>
+<h3 appShadow>Shadow example</h3>
+<h3 appScale>Scale example</h3>
+```
+
+🖥 **Console output:**
+```
+this directive works
+this directive works
+this directive works
+this directive works
+this directive works
+```
+
+---
+
+Would you like me to modify them so that **each prints its own name** (for example, “HighlightDirective works” / “BlinkDirective works”)?
