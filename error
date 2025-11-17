@@ -1,119 +1,57 @@
-Excellent — you’re almost done! 🙌  
-
-The errors you’re now seeing are **TypeScript test-spec errors** (they are coming from the `*.spec.ts` files).  
-These occur because your **directive’s constructors expect injected parameters** (like `ElementRef`, `Renderer2`), but the auto‑generated test files call them **without any arguments**.
-
-In other words:
-
-Your directive has something like:
-```ts
-constructor(private el: ElementRef, private renderer: Renderer2) {}
-```
-
-but the spec file has:
-```ts
-const directive = new ScaleDirective();
-```
-
-Hence 👉 **“Expected 2 arguments, but got 0.”**
-
----
-
-### ✅ You have 3 easy options to fix this
-
----
-
-## 🟢 **Option 1 (Simplest & Recommended for Now) — Delete Spec Files**
-
-If you are not actively writing or running Angular unit tests right now (which most beginners aren’t during setup), you can safely delete these spec files:
-
-```
-src/app/login/Directives/blink.spec.ts
-src/app/login/Directives/rotate.spec.ts
-src/app/login/Directives/scale.spec.ts
-src/app/login/Directives/shadow.spec.ts
-src/app/login/Directives/highlight.spec.ts
-```
-
-Do it from VS Code (Right‑click → Delete).
-
-These files are **only used for Jasmine unit testing** — deleting them will not affect your Angular app build or serve.
-
----
-
-## 🟡 **Option 2 — Fix Spec Files**
-
-If you do want to keep them for unit testing, fix the constructor calls like this:
-
-Example → **blink.spec.ts**
-```ts
-import { ElementRef } from '@angular/core';
-import { BlinkDirective } from './blink.directive';
-
-describe('BlinkDirective', () => {
-  it('should create an instance', () => {
-    const elementRef = new ElementRef(document.createElement('div'));
-    const directive = new BlinkDirective(elementRef);
-    expect(directive).toBeTruthy();
-  });
-});
-```
-
-Example → **rotate.spec.ts**
-```ts
-import { ElementRef, Renderer2 } from '@angular/core';
-import { RotateDirective } from './rotate.directive';
-
-describe('RotateDirective', () => {
-  it('should create an instance', () => {
-    const elementRef = new ElementRef(document.createElement('div'));
-    const mockRenderer = { setStyle: () => {} } as Renderer2;
-    const directive = new RotateDirective(elementRef, mockRenderer);
-    expect(directive).toBeTruthy();
-  });
-});
-```
-
-Do the same for **scale**, **shadow**, and **highlight**, adjusting constructor parameters (add `Renderer2` if needed).
-
----
-
-## 🔴 **Option 3 — Ignore Spec Errors in Build**
-
-If your goal is simply to run the app (not tests), you can also temporarily disable spec compilation:
-
-Open `angular.json` and remove or comment out the `test` configuration section or use:
-
-```bash
-ng serve
-```
-
-instead of `ng test`.
-
-`ng serve` doesn’t compile spec files by default unless you’ve modified something unusual.
-
----
-
-### 🧹 Quick Summary
-
-| Option | What it does | Recommended for |
-|--------|---------------|----------------|
-| 🟢 1. Delete spec files | Skips testing, removes TS errors | Most beginners / app dev |
-| 🟡 2. Fix spec files | Lets you run proper unit tests | If you’re learning testing |
-| 🔴 3. Ignore tests | Quick skip | Temporary workaround |
-
----
-
-### 💡 Pro tip
-Also rename your `Directives` folder to lowercase **`directives`**, because imports like  
-`'./directives/blink.directive'` are case‑sensitive on Linux/macOS builds.
-
----
-
-After doing **Option 1 (delete spec files)**, then run again:
-
-```bash
-ng serve --open
-```
-
-✅ Result → all TypeScript “Expected arguments” errors disappear, and your Angular app should compile successfully.
+[{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/login/Directives/rotate.spec.ts",
+	"owner": "typescript",
+	"code": "2352",
+	"severity": 8,
+	"message": "Conversion of type '{ setStyle: () => void; }' to type 'Renderer2' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.\n  Type '{ setStyle: () => void; }' is missing the following properties from type 'Renderer2': data, destroy, createElement, createComment, and 16 more.",
+	"source": "ts",
+	"startLineNumber": 7,
+	"startColumn": 26,
+	"endLineNumber": 7,
+	"endColumn": 61,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/login/Directives/scale.spec.ts",
+	"owner": "typescript",
+	"code": "2554",
+	"severity": 8,
+	"message": "Expected 2 arguments, but got 0.",
+	"source": "ts",
+	"startLineNumber": 6,
+	"startColumn": 23,
+	"endLineNumber": 6,
+	"endColumn": 43,
+	"relatedInformation": [
+		{
+			"startLineNumber": 7,
+			"startColumn": 15,
+			"endLineNumber": 7,
+			"endColumn": 37,
+			"message": "An argument for 'el' was not provided.",
+			"resource": "/c:/exl/angApp1/firstApp/src/app/login/directives/scale.directive.ts"
+		}
+	],
+	"origin": "extHost1"
+},{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/login/Directives/shadow.spec.ts",
+	"owner": "typescript",
+	"code": "2554",
+	"severity": 8,
+	"message": "Expected 2 arguments, but got 0.",
+	"source": "ts",
+	"startLineNumber": 6,
+	"startColumn": 23,
+	"endLineNumber": 6,
+	"endColumn": 44,
+	"relatedInformation": [
+		{
+			"startLineNumber": 7,
+			"startColumn": 15,
+			"endLineNumber": 7,
+			"endColumn": 37,
+			"message": "An argument for 'el' was not provided.",
+			"resource": "/c:/exl/angApp1/firstApp/src/app/login/directives/shadow.directive.ts"
+		}
+	],
+	"origin": "extHost1"
+}]
