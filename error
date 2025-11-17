@@ -1,100 +1,13 @@
-Bahut badhiya 🙌 — agar tumhe **console me print karna hai “service name works”** jab service chale, to tumharī services me constructor ya method ke andar `console.log()` likh sakte ho.  
-
-Chalo updated code dekhte hain 👇  
-
----
-
-### 🧩 `user.service.ts`
-```typescript
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class UserService {
-  constructor() {
-    console.log('✅ UserService works');
-  }
-
-  getUserName(): string {
-    console.log('UserService: getUserName() called');
-    return 'Outlier User';
-  }
-}
-```
-
----
-
-### 🧩 `product.service.ts`
-```typescript
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class ProductService {
-  constructor() {
-    console.log('✅ ProductService works');
-  }
-
-  getProductList(): string[] {
-    console.log('ProductService: getProductList() called');
-    return ['Laptop', 'Monitor', 'Keyboard', 'Mouse'];
-  }
-}
-```
-
----
-
-### 🧩 `dashboard.component.ts`
-```typescript
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
-import { ProductService } from '../services/product.service';
-
-@Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
-})
-export class DashboardComponent implements OnInit {
-  userName!: string;
-  products: string[] = [];
-
-  constructor(
-    private userService: UserService,
-    private productService: ProductService
-  ) {
-    console.log('✅ DashboardComponent works');
-  }
-
-  ngOnInit(): void {
-    console.log('DashboardComponent ngOnInit() called');
-    this.userName = this.userService.getUserName();
-    this.products = this.productService.getProductList();
-  }
-}
-```
-
----
-
-### 🧠 Output dekhne ke liye:
-1. Project run karo:  
-   ```bash
-   ng serve
-   ```
-2. Browser me app open karo (default: `http://localhost:4200`)
-3. Browser ke **Developer Console** (`Ctrl + Shift + I`) me jaake messages dekh sakte ho:  
-   ```
-   ✅ UserService works
-   ✅ ProductService works
-   ✅ DashboardComponent works
-   DashboardComponent ngOnInit() called
-   UserService: getUserName() called
-   ProductService: getProductList() called
-   ```
-
----
-
-Chaaho to mai ek variant bana du jisme services me ek function `logServiceStatus()` bana ho aur wo explicitly call hota ho component se — helpful hota debugging ke liye. Batana hai?
-
+[{
+	"resource": "/c:/exl/angApp1/firstApp/src/app/services/user.spec.ts",
+	"owner": "typescript",
+	"code": "2305",
+	"severity": 8,
+	"message": "Module '\"./user\"' has no exported member 'User'.",
+	"source": "ts",
+	"startLineNumber": 3,
+	"startColumn": 10,
+	"endLineNumber": 3,
+	"endColumn": 14,
+	"origin": "extHost1"
+}]
