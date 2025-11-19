@@ -1,78 +1,99 @@
+Perfect 👍 Let’s make your code **easier to read and understand** by adding **more explanatory comments** in every file — line‑by‑line.  
+Below is the updated and **well‑documented version** of your code in separate files.
+
+---
+
+## 🧩 1️⃣ `uppercase.directive.ts`
+
+```typescript
 import { Directive, ElementRef, AfterViewInit } from '@angular/core';
 
+// 👇 Custom Directive Definition — appUppercase
 @Directive({
+  // Selector name — you’ll use this as an attribute in HTML like [appUppercase]
   selector: '[appUppercase]'
 })
 export class UppercaseDirective implements AfterViewInit {
+  
+  // ElementRef gives direct access to the host DOM element
   constructor(private el: ElementRef) {}
 
+  // ngAfterViewInit() lifecycle hook runs after the element is loaded in the DOM
   ngAfterViewInit() {
+    // Get the current text inside the element
     const text = this.el.nativeElement.innerText;
+
+    // Convert that text content to uppercase
     this.el.nativeElement.innerText = text.toUpperCase();
 
+    // Log message to confirm the directive executed
     console.log('UppercaseDirective works — text converted to UPPERCASE');
+  }
 }
-}
+```
 
+💡 **What it does:**  
+Whenever you use `[appUppercase]` on an element, any text inside it automatically becomes **UPPERCASE** once it renders.
 
+**Example:**
+```html
+<p appUppercase>hello world</p>
+<!-- Output on screen: HELLO WORLD -->
+```
 
+---
+
+## 🧩 2️⃣ `numbers-only.directive.ts`
+
+```typescript
 import { Directive, HostListener } from '@angular/core';
 
+// 👇 Custom Directive Definition — appNumbersOnly
 @Directive({
+  // Selector used as an attribute on input fields
   selector: '[appNumbersOnly]'
 })
 export class NumbersOnlyDirective {
+
+  // 👂 HostListener listens to the input event on the element this directive is applied to
   @HostListener('input', ['$event'])
   onInput(event: Event): void {
+
+    // Cast the event target to an input element to access its value
     const input = event.target as HTMLInputElement;
+
+    // Replace everything that is not a digit (0–9) with an empty string using regex
     const filtered = input.value.replace(/[^0-9]/g, '');
+
+    // If the user typed non-numeric characters, remove them immediately
     if (input.value !== filtered) {
       input.value = filtered;
     }
 
+    // Debug log message
     console.log('NumbersOnlyDirective works — only digits 0‑9 allowed');
   }
 }
+```
 
+💡 **What it does:**  
+Prevents users from entering letters or symbols in inputs. It keeps only digits (`0–9`).
 
+**Example:**
+```html
+<input type="text" appNumbersOnly />
+<!-- Typing abc123 → becomes 123 -->
+```
 
-import { UserService } from './user.service';
+---
 
-export class LoginService {
-  constructor(private userService: UserService) {
-    console.log(' LoginService Initialized Successfully');
-  }
+## 🧩 3️⃣ `user.service.ts`
 
-  userLogin() {
-    const user = this.userService.getUserInfo();
-    console.log('Logging in user...');
-    console.log(` ${user.name} (${user.role}) logged in successfully at ${new Date().toLocaleString()}`);
-  }
-}
-
-
-export class ProductService {
-  private productList = [
-    { id: 1, name: 'Laptop', price: 55000 },
-    { id: 2, name: 'Mechanical Keyboard', price: 4500 },
-    { id: 3, name: 'Gaming Mouse', price: 2200 },
-    { id: 4, name: 'Headphones', price: 3500 }
-  ];
-
-  constructor() {
-    console.log(' ProductService Initialized Successfully');
-    console.log('Available Product List:');
-    this.productList.forEach(p =>
-      console.log(`→ ${p.id}. ${p.name} - ₹${p.price}`)
-    );
-  }
-
-  getProducts() {
-    return this.productList;
-  }
-}
-
+```typescript
+// A simple service to store and provide user information
 export class UserService {
+  
+  // 🧱 Private user object — holds basic info about the logged‑in user
   private user = {
     name: 'Ankit Kumar',
     email: 'Ankitkumar@gmail.com',
@@ -80,16 +101,152 @@ export class UserService {
     lastLogin: '2024-10-10 14:32'
   };
 
+  // Constructor runs once when service is created
   constructor() {
-    console.log(' UserService Initialized Successfully');
+    console.log('UserService Initialized Successfully');
     console.log('Fetching user details...');
+
+    // Displaying user info in console for debug purposes
     console.log(`→ Name: ${this.user.name}`);
     console.log(`→ Email: ${this.user.email}`);
     console.log(`→ Role: ${this.user.role}`);
     console.log(`→ Last Login: ${this.user.lastLogin}`);
   }
 
+  // 🎯 Method to return the user data wherever needed (e.g., in LoginService)
   getUserInfo() {
     return this.user;
   }
 }
+```
+
+💡 **What it does:**  
+Stores user details and lets other classes or components fetch them using the `getUserInfo()` function.
+
+---
+
+## 🧩 4️⃣ `login.service.ts`
+
+```typescript
+import { UserService } from './user.service';
+
+// Service responsible for user login functionality
+export class LoginService {
+  
+  // 👇 Dependency Injection — this pulls in an instance of UserService
+  constructor(private userService: UserService) {
+    console.log('LoginService Initialized Successfully');
+  }
+
+  // Method to simulate user login
+  userLogin() {
+    // Get user details from UserService
+    const user = this.userService.getUserInfo();
+
+    // Log a simulated login process
+    console.log('Logging in user...');
+
+    // Prints user’s name and role + login timestamp
+    console.log(`${user.name} (${user.role}) logged in successfully at ${new Date().toLocaleString()}`);
+  }
+}
+```
+
+💡 **What it does:**  
+Simulates a login process by fetching user info and printing it with the current time.
+
+---
+
+## 🧩 5️⃣ `product.service.ts`
+
+```typescript
+// A service to manage the list of products in the application
+export class ProductService {
+
+  // 🧱 Hardcoded product list for demonstration
+  private productList = [
+    { id: 1, name: 'Laptop', price: 55000 },
+    { id: 2, name: 'Mechanical Keyboard', price: 4500 },
+    { id: 3, name: 'Gaming Mouse', price: 2200 },
+    { id: 4, name: 'Headphones', price: 3500 }
+  ];
+
+  // Constructor runs once at the time of service initialization
+  constructor() {
+    console.log('ProductService Initialized Successfully');
+    console.log('Available Product List:');
+
+    // Loop through each product and display details in console
+    this.productList.forEach(p =>
+      console.log(`→ ${p.id}. ${p.name} - ₹${p.price}`)
+    );
+  }
+
+  // 🧾 Method to provide product data to other components/services
+  getProducts() {
+    // Returns the array of products
+    return this.productList;
+  }
+}
+```
+
+💡 **What it does:**  
+Provides a list of products (for example, to display in a product listing component).
+
+---
+
+## 🗂 Suggested Folder Structure
+
+```
+src/
+ └── app/
+      ├── directives/
+      │    ├── uppercase.directive.ts
+      │    └── numbers-only.directive.ts
+      │
+      ├── services/
+      │    ├── user.service.ts
+      │    ├── login.service.ts
+      │    └── product.service.ts
+      │
+      └── app.component.ts
+```
+
+---
+
+## ⚙️ Optional: Importing in Module
+
+To actually use these directives, you’d import them into an Angular module and add them in `declarations` (for directives) and `providers` (for services).
+
+```typescript
+// app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { UppercaseDirective } from './directives/uppercase.directive';
+import { NumbersOnlyDirective } from './directives/numbers-only.directive';
+import { UserService } from './services/user.service';
+import { LoginService } from './services/login.service';
+import { ProductService } from './services/product.service';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    UppercaseDirective,
+    NumbersOnlyDirective   // Register custom directives here
+  ],
+  imports: [BrowserModule],
+  providers: [
+    UserService,
+    LoginService,
+    ProductService         // Register your services here
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+---
+
+Would you like me to also show an example **HTML + Component** file that uses all of these (applying `[appUppercase]` + `[appNumbersOnly]` and calling the services)?
